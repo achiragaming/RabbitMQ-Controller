@@ -15,7 +15,11 @@ class RabbitMQController extends EventEmitter {
   state: State;
   client: amqp.Connection | null;
   url: string;
-  constructor(url: string, maxRetryAttempts: number, reconnectTimeout: number) {
+  constructor(
+    url: string,
+    maxRetryAttempts: number = Infinity,
+    reconnectTimeout: number = 5000
+  ) {
     super();
     this.url = url;
     this.maxRetryAttempts = maxRetryAttempts;
