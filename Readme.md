@@ -1,4 +1,3 @@
-````markdown
 ## Getting the RabbitMQ Instance
 
 You can obtain the underlying RabbitMQ instance from the `node-rabbitmq-manager` package. Here's how to do it:
@@ -8,7 +7,6 @@ First, import the `Manager` class from the package into your application:
 ```javascript
 import { Manager } from "node-rabbitmq-manager";
 ```
-````
 
 Next, create an instance of the `Manager` by providing the RabbitMQ server URL and optional configuration parameters. You can also set the maximum number of retry attempts and the reconnection timeout.
 
