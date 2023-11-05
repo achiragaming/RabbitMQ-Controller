@@ -1,6 +1,6 @@
 # RabbitMQManager
 
-The RabbitMQManager is a TypeScript Library that provides a convenient way to manage RabbitMQ connections with features like automatic reconnection and error handling. It extends the `EventEmitter` class to emit events for various connection states.
+The RabbitMQManager is a TypeScript Library that provides a convenient way to manage RabbitMQ connections for Nodejs with features like automatic reconnection and error handling. It extends the `EventEmitter` class to emit events for various connection states.
 
 ## Installation
 
@@ -39,8 +39,7 @@ const RabbitMQManager = new RabbitMQManager(
 To start the RabbitMQ connection, call the `start` method. This method will attempt to establish a connection to the RabbitMQ server.
 
 ```javascript
-RabbitMQManager
-  .start()
+RabbitMQManager.start()
   .then(() => {
     console.log("Connected to RabbitMQ server.");
   })
