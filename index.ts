@@ -8,7 +8,7 @@ enum State {
   connecting = 4,
   destroyed = 5,
 }
-class RabbitMQController extends EventEmitter {
+class RabbitMQManager extends EventEmitter {
   maxRetryAttempts: number;
   reconnectTimeout: number;
   currentRetryAttempt: number;
@@ -97,4 +97,4 @@ class RabbitMQController extends EventEmitter {
   }
 }
 
-export default RabbitMQController;
+export default RabbitMQManager;
