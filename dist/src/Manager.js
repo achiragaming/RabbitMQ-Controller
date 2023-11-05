@@ -1,6 +1,6 @@
 import amqp from "amqplib";
 import { EventEmitter } from "events";
-import { State } from "./Constants.js";
+import { State, EventTypes } from "./Constants.js";
 class Manager extends EventEmitter {
     maxRetryAttempts;
     reconnectTimeout;
@@ -27,6 +27,7 @@ class Manager extends EventEmitter {
             // Reset retry count on successful connection
             this.currentRetryAttempt = 0;
             this.changeState(State.open);
+            this.emitEvent(EventTypes.open);
             this.client.on("close", this.close.bind(this));
             this.client.on("error", this.error.bind(this));
         }
@@ -43,6 +44,7 @@ class Manager extends EventEmitter {
             const retryDelay = this.currentRetryAttempt * this.reconnectTimeout; // Exponential backoff
             await new Promise((resolve) => setTimeout(resolve, retryDelay));
             this.changeState(State.reconnecting);
+            this.emitEvent(EventTypes.reconnecting);
             await this.connect();
         }
         else {
@@ -52,14 +54,16 @@ class Manager extends EventEmitter {
     }
     async close() {
         this.changeState(State.closed);
+        this.emitEvent(EventTypes.closed);
         await this.reconnect();
     }
     error(error) {
-        this.emit("error", this, error);
+        this.emitEvent(EventTypes.error, error);
         throw Error;
     }
     destroy() {
         this.changeState(State.destroyed);
+        this.emitEvent(EventTypes.destroyed);
         this.clear();
     }
     clear() {
@@ -68,10 +72,13 @@ class Manager extends EventEmitter {
     }
     changeState(state) {
         this.state = state;
-        this.emit(State[this.state], this);
+    }
+    emitEvent(event, ...args) {
+        this.emit(EventTypes[event], ...args);
     }
     async start() {
         this.changeState(State.connecting);
+        this.emitEvent(EventTypes.connecting);
         await this.connect();
         return this;
     }

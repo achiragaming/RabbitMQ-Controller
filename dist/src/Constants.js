@@ -7,4 +7,13 @@ export var State;
     State[State["connecting"] = 4] = "connecting";
     State[State["destroyed"] = 5] = "destroyed";
 })(State || (State = {}));
+export var EventTypes;
+(function (EventTypes) {
+    EventTypes["open"] = "open";
+    EventTypes["closed"] = "closed";
+    EventTypes["reconnecting"] = "reconnecting";
+    EventTypes["connecting"] = "connecting";
+    EventTypes["destroyed"] = "destroyed";
+    EventTypes["error"] = "error";
+})(EventTypes || (EventTypes = {}));
 //# sourceMappingURL=Constants.js.map

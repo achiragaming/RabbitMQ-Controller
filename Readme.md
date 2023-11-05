@@ -44,6 +44,32 @@ const rabbitmqConnection = rabbitmqManager.client;
 
 This allows you to interact with the RabbitMQ instance using the full set of methods provided by the `amqplib` library.
 
+### Events
+
+The RabbitMQManager emits events to notify you of various connection states and errors. You can listen to these events to handle specific scenarios in your application.
+
+- `open`: Emitted when the connection to the RabbitMQ server is established.
+- `closed`: Emitted when the connection is closed, and the controller is attempting to reconnect.
+- `reconnecting`: Emitted when the controller is in the process of reconnecting.
+- `connecting`: Emitted when the controller is attempting to connect to the RabbitMQ server.
+- `error`: Emitted when an error occurs during the connection process.
+
+You can use the `on` method to listen to these events and respond to them in your code:
+
+```javascript
+RabbitMQManager.on("open", () => {
+  console.log("RabbitMQ connection is open.");
+});
+
+RabbitMQManager.on("connecting", () => {
+  console.log("RabbitMQ connection is in the process of connecting.");
+});
+
+RabbitMQManager.on("error", (error) => {
+  console.error("RabbitMQ error:", error);
+});
+```
+
 ## License
 
 This package is released under the MIT License. See the [LICENSE](LICENSE) file for details.
