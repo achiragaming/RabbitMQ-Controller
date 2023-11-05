@@ -1,6 +1,6 @@
 {
   "name": "node-rabbitmq-manager",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "The RabbitMQManager is a TypeScript Library that provides a convenient way to manage RabbitMQ connections for Nodejs with features like automatic reconnection and error handling. It extends the `EventEmitter` class to emit events for various connection states.",
   "main": "dist/index.js",
   "types": "types/node-rabbitmq-manager.d.ts",

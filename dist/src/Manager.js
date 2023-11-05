@@ -1,7 +1,7 @@
 import amqp from "amqplib";
 import { EventEmitter } from "events";
 import { State } from "./Constants.js";
-export class Manager extends EventEmitter {
+class Manager extends EventEmitter {
     maxRetryAttempts;
     reconnectTimeout;
     currentRetryAttempt;
@@ -76,4 +76,5 @@ export class Manager extends EventEmitter {
         return this;
     }
 }
+export { Manager };
 //# sourceMappingURL=Manager.js.map
