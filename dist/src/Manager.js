@@ -74,7 +74,7 @@ class Manager extends EventEmitter {
         this.state = state;
     }
     emitEvent(event, ...args) {
-        this.emit(EventTypes[event], ...args);
+        this.emit(EventTypes[event], this, ...args);
     }
     async start() {
         this.changeState(State.connecting);
