@@ -1,6 +1,6 @@
 {
   "name": "rabbitmq-controller",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "a controller to manage the rabbitmq connection",
   "main": "index.ts",
   "scripts": {

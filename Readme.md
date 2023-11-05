@@ -1,6 +1,3 @@
-Certainly! Here's the response in Markdown format that you can use for your README.md file:
-
-````markdown
 # RabbitMQController
 
 The RabbitMQController is a TypeScript class that provides a convenient way to manage RabbitMQ connections with features like automatic reconnection and error handling. It extends the `EventEmitter` class to emit events for various connection states.
@@ -12,7 +9,6 @@ You can install the RabbitMQController package using npm:
 ```bash
 npm install rabbitmq-controller
 ```
-````
 
 ## Getting Started
 
