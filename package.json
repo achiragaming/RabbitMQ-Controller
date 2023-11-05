@@ -1,0 +1,19 @@
+{
+  "name": "rabbitmq-controller",
+  "version": "1.0.0",
+  "description": "a controller to manage the rabbitmq connection",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "rabbitmq",
+    "amqplib",
+    "rabbitmq-controller"
+  ],
+  "author": "achira",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.10.3"
+  }
+}
