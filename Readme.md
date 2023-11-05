@@ -7,7 +7,7 @@ The RabbitMQManager is a TypeScript Library that provides a convenient way to ma
 You can install the RabbitMQManager package using npm:
 
 ```bash
-npm install rabbitmq-controller
+npm install node-rabbitmq-manager
 ```
 
 ## Getting Started
@@ -19,7 +19,7 @@ To use the RabbitMQManager, follow these steps:
 First, import the RabbitMQManager module into your application.
 
 ```javascript
-import RabbitMQManager from "rabbitmq-controller";
+import RabbitMQManager from "node-rabbitmq-manager";
 ```
 
 ### Create an Instance
