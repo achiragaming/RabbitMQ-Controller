@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ESNext" /* Set the JavaScript language version to ESNext or your desired version */,
+    "module": "NodeNext" /* Specify the module system to use (e.g., CommonJS, ES6) */,
+    "outDir": "./dist" /* Output directory for compiled JavaScript files */,
+    "strict": true /* Enable strict type-checking options */,
+    "esModuleInterop": true /* Allow default imports from modules with no default export */,
+    "skipLibCheck": true /* Skip type checking of declaration files (e.g., .d.ts) */,
+    "forceConsistentCasingInFileNames": true /* Enforce consistent file and directory casing */,
+    "sourceMap": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "index.ts"
+  ] /* List of files to include in the compilation */,
+  "exclude": [
+    "node_modules"
+  ] /* List of files and directories to exclude from the compilation */
+}
