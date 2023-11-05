@@ -57,15 +57,15 @@ The RabbitMQManager emits events to notify you of various connection states and 
 You can use the `on` method to listen to these events and respond to them in your code:
 
 ```javascript
-RabbitMQManager.on("open", () => {
+RabbitMQManager.on("open", (manager) => {
   console.log("RabbitMQ connection is open.");
 });
 
-RabbitMQManager.on("connecting", () => {
+RabbitMQManager.on("connecting", (manager) => {
   console.log("RabbitMQ connection is in the process of connecting.");
 });
 
-RabbitMQManager.on("error", (error) => {
+RabbitMQManager.on("error", (manager, error) => {
   console.error("RabbitMQ error:", error);
 });
 ```
