@@ -71,7 +71,3 @@ RabbitMQManager.on("error", (manager, error) => {
 ## License
 
 This package is released under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-```
-
-```
