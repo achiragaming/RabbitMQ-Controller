@@ -19,7 +19,7 @@ To use the RabbitMQManager, follow these steps:
 First, import the RabbitMQManager module into your application.
 
 ```javascript
-import RabbitMQManager from "node-rabbitmq-manager";
+import { RabbitMQManager } from "node-rabbitmq-manager";
 ```
 
 ### Create an Instance

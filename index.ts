@@ -97,4 +97,4 @@ class RabbitMQManager extends EventEmitter {
   }
 }
 
-export default RabbitMQManager;
+export { RabbitMQManager };
