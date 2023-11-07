@@ -14,3 +14,10 @@ export enum EventTypes {
   destroyed = "destroyed",
   error = "error",
 }
+
+export enum Methods {
+  get = "GET",
+  post = "POST",
+  put = "PUT",
+  delete = "DELETE",
+}

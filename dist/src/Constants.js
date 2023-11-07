@@ -16,4 +16,11 @@ export var EventTypes;
     EventTypes["destroyed"] = "destroyed";
     EventTypes["error"] = "error";
 })(EventTypes || (EventTypes = {}));
+export var Methods;
+(function (Methods) {
+    Methods["get"] = "GET";
+    Methods["post"] = "POST";
+    Methods["put"] = "PUT";
+    Methods["delete"] = "DELETE";
+})(Methods || (Methods = {}));
 //# sourceMappingURL=Constants.js.map

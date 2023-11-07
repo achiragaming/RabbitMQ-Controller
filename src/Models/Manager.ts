@@ -1,37 +1,42 @@
 import amqp from "amqplib";
 import { EventEmitter } from "events";
-import { State, EventTypes } from "./Constants.js";
-class Manager extends EventEmitter {
-  maxRetryAttempts: number;
-  reconnectTimeout: number;
+import { State, EventTypes } from "../Constants.js";
+import { managerTypes } from "../Types.js";
+
+interface Manager {
+  start(): Promise<this>;
+  options: {
+    url: string;
+    maxRetryAttempts: number;
+    reconnectTimeout: number;
+  };
   currentRetryAttempt: number;
   state: State;
   client: amqp.Connection | null;
-  url: string;
-  constructor(
-    url: string,
-    maxRetryAttempts: number = Infinity,
-    reconnectTimeout: number = 5000
-  ) {
+}
+
+class Manager extends EventEmitter {
+  constructor({
+    url,
+    maxRetryAttempts = Infinity,
+    reconnectTimeout = 5000,
+  }: managerTypes) {
     super();
-    this.url = url;
-    this.maxRetryAttempts = maxRetryAttempts;
-    this.reconnectTimeout = reconnectTimeout;
+    this.options = { url, maxRetryAttempts, reconnectTimeout };
     this.state = State.none;
     this.currentRetryAttempt = 0;
     this.client = null;
   }
 
-  private async connect(): Promise<void> {
+  private async connect() {
     if (this.state === State.destroyed)
       return this.error(new Error(`RabbitMQ Connection was destroyed`));
 
-    if (!this.url)
+    if (!this.options.url)
       return this.error(new Error(`RabbitMQ Connection url not found`));
 
     try {
-      this.client = await amqp.connect(this.url);
-      // Reset retry count on successful connection
+      this.client = await amqp.connect(this.options.url);
       this.currentRetryAttempt = 0;
       this.changeState(State.open);
       this.emitEvent(EventTypes.open);
@@ -47,10 +52,11 @@ class Manager extends EventEmitter {
       return this.error(
         new Error(`Connection Max retry attempts reached. Failed to connect`)
       );
-    if (this.currentRetryAttempt < this.maxRetryAttempts) {
+    if (this.currentRetryAttempt < this.options.maxRetryAttempts) {
       this.clear();
       this.currentRetryAttempt++;
-      const retryDelay = this.currentRetryAttempt * this.reconnectTimeout; // Exponential backoff
+      const retryDelay =
+        this.currentRetryAttempt * this.options.reconnectTimeout; // Exponential backoff
       await new Promise((resolve) => setTimeout(resolve, retryDelay));
       this.changeState(State.reconnecting);
       this.emitEvent(EventTypes.reconnecting);

@@ -5,7 +5,6 @@
     "outDir": "./dist" /* Output directory for compiled JavaScript files */,
     "strict": true /* Enable strict type-checking options */,
     "esModuleInterop": true /* Allow default imports from modules with no default export */,
-    "skipLibCheck": true /* Skip type checking of declaration files (e.g., .d.ts) */,
     "forceConsistentCasingInFileNames": true /* Enforce consistent file and directory casing */,
     "sourceMap": true
   },
