@@ -9,23 +9,35 @@ interface Manager {
     url: string;
     maxRetryAttempts: number;
     reconnectTimeout: number;
+    options?: Record<string, any>;
   };
   currentRetryAttempt: number;
   state: State;
-  client: amqp.Connection | null;
+  client?: amqp.Connection;
+
+  callbacks?: {
+    open?: Function;
+    closed?: Function;
+    error?: Function;
+    connecting?: Function;
+    reconnecting?: Function;
+  };
 }
 
 class Manager extends EventEmitter {
   constructor({
     url,
+    options = {},
     maxRetryAttempts = Infinity,
     reconnectTimeout = 5000,
+    callbacks = {},
   }: managerTypes) {
     super();
-    this.options = { url, maxRetryAttempts, reconnectTimeout };
+    this.options = { url, maxRetryAttempts, reconnectTimeout, options };
     this.state = State.none;
     this.currentRetryAttempt = 0;
-    this.client = null;
+    this.client = undefined;
+    this.callbacks = callbacks;
   }
 
   private async connect() {
@@ -36,10 +48,10 @@ class Manager extends EventEmitter {
       return this.error(new Error(`RabbitMQ Connection url not found`));
 
     try {
-      this.client = await amqp.connect(this.options.url);
+      this.client = await amqp.connect(this.options.url, this.options.options);
       this.currentRetryAttempt = 0;
       this.changeState(State.open);
-      this.emitEvent(EventTypes.open);
+      await this.emitEvent(EventTypes.open);
       this.client.on("close", this.close.bind(this));
       this.client.on("error", this.error.bind(this));
     } catch (error) {
@@ -86,14 +98,38 @@ class Manager extends EventEmitter {
   }
   private clear(): void {
     this.client?.removeAllListeners();
-    this.client = null;
+    this.client = undefined;
   }
 
   private changeState(state: State): void {
     this.state = state;
   }
-  private emitEvent(event: EventTypes, ...args: any[]): void {
+  private async emitEvent(event: EventTypes, ...args: any[]): Promise<void> {
     this.emit(EventTypes[event], this, ...args);
+    switch (event) {
+      case EventTypes.open: {
+        this.callbacks?.open && (await this.callbacks.open(this, ...args));
+        break;
+      }
+      case EventTypes.closed: {
+        this.callbacks?.closed && (await this.callbacks.closed(this, ...args));
+        break;
+      }
+      case EventTypes.error: {
+        this.callbacks?.error && (await this.callbacks.error(this, ...args));
+        break;
+      }
+      case EventTypes.reconnecting: {
+        this.callbacks?.reconnecting &&
+          (await this.callbacks.reconnecting(this, ...args));
+        break;
+      }
+      case EventTypes.connecting: {
+        this.callbacks?.connecting &&
+          (await this.callbacks.connecting(this, ...args));
+        break;
+      }
+    }
   }
   public async start(): Promise<this> {
     this.changeState(State.connecting);

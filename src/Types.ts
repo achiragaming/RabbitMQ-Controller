@@ -9,6 +9,14 @@ export type managerTypes = {
   url: string;
   maxRetryAttempts: number;
   reconnectTimeout: number;
+  options?: Record<string, any>;
+  callbacks?: {
+    open?: Function;
+    closed?: Function;
+    error?: Function;
+    connecting?: Function;
+    reconnecting?: Function;
+  };
 };
 
 export type clientTypes = any;
